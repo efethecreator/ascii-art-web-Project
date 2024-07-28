@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ASCII Art Generator</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+        }
+
+    .wrapper {
+    width: 100%;
+    text-align: center;
+    background-color: #3282b8;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    position: relative; /* Add relative positioning */
+    z-index: 1; /* Ensure ASCII output is above the team content */
+}
+
+.title {
+    text-align: center;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.text {
+    width: 60%;
+    height: 2rem;
+    font-size: 1rem;
+    padding-left: 8px;
+    outline: none;
+    border-radius: 5px;
+    border-style: none;
+}
+
+.banner {
+    width: 150px;
+    margin-left: 8px;
+    height: 34px;
+    font-size: 1rem;
+    padding-left: 8px;
+    padding-right: 8px;
+    outline: none;
+    border-radius: 5px;
+}
+
+pre {
+    text-align: left;
+    font-size: 0.8rem;
+    margin-top: 2rem;
+    width: 100%;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.team {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative; /* Change position to relative */
+    margin-top: 20px; /* Add margin top to create a gap */
+    padding: 20px; /* Add padding for spacing and readability */
+    box-sizing: border-box;
+}
+
+        .ascii-output {
+            height: 450px;
+            overflow: scroll;
+            width: 100%;
+        }
+
+
+        /* Positioning for the usage button */
+        #usageBtn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="wrapper">
+    <h1 class="title">ASCII Art Generator</h1>
+    <button id="usageBtn">Usage</button><!-- Changed button text to "Usage" -->
+    <form id="ascii-form" action="/ascii-art" method="post">
+        <textarea
+                id="text"
+                name="text"
+                class="text"
+                rows="5"
+                cols="80"
+        ></textarea>
+        <select name="banner" id="ascii-art" class="banner">
+            <option value="standard" selected>Standard</option>
+            <option value="shadow">Shadow</option>
+            <option value="thinkertoy">Thinkertoy</option>
+            <option value="banner" selected>Banner</option>
+            <option value="crocodile">Crocodile</option>
+            <option value="arrow" selected>Arrow</option>
+            <option value="small">Small</option>
+            <option value="chunky" selected>Chunky</option>
+            <option value="bulbhead">Bulbhead</option>
+            <option value="looney" selected>Looney</option>
+            <option value="pyramid">Pyramid</option>
+            <option value="slant" selected>Slant</option>
+            <option value="wave">Wave</option>
+        </select>
+        <select name="bgcolor" id="background-color" class="banner">
+            <option value="white">White</option>
+            <option value="red">Red</option>
+            <option value="green">Green</option>
+            <option value="yellow">Yellow</option>
+            <option value="blue">Blue</option>
+            <option value="magenta">Magenta</option>
+            <option value="cyan">Cyan</option>
+            <option value="orange">Orange</option>
+            <option value="pink">Pink</option>
+            <option value="purple">Purple</option>
+            <option value="grey">Grey</option>
+            <option value="brown">Brown</option>
+        </select>
+        <select name="textcolor" id="text-color" class="banner">
+            <option value="black">Black</option>
+            <option value="white">White</option>
+            <option value="red">Red</option>
+            <option value="green">Green</option>
+            <option value="yellow">Yellow</option>
+            <option value="blue">Blue</option>
+            <option value="magenta">Magenta</option>
+            <option value="cyan">Cyan</option>
+            <option value="orange">Orange</option>
+            <option value="pink">Pink</option>
+            <option value="purple">Purple</option>
+            <option value="grey">Grey</option>
+            <option value="brown">Brown</option>
+        </select>
+    </form>
+</div>
+<pre id="ascii-output" class="ascii-output"></pre>
+
+<div class="team">
+    <div style="font-family: monospace, fixed; font-weight: bold; font-size: 4px;">
+        
+    </div>
+</div>
+
+<div class="team">
+    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/11b8uutmmcY9Kad689IFJ1?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+</div>
+
+
+
+<!-- Modal for usage -->
+<div id="usageModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Welcome to the web page that displays the text you enter in different ASCII art formats. This program is designed to entertain you and show you what you type in various forms. Enjoy :=)</p>
+        <p>Things you need to know when using it:</p>
+        <p>The values you see on the screen are organized according to the ASCII table and do not give results for every value. The values you can see the equivalent values are between 32 and 126 in the ASCII table. This range includes characters including spaces:<br>
+            !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~</p>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        // Open modal when usage button is clicked
+        $("#usageBtn").click(function () {
+            $("#usageModal").css("display", "block");
+        });
+
+        // Close modal when close button is clicked
+        $(".close").click(function () {
+            $("#usageModal").css("display", "none");
+        });
+
+        // Close modal when clicking outside the modal content
+        $(window).click(function (event) {
+            if (event.target == $("#usageModal")[0]) {
+                $("#usageModal").css("display", "none");
+            }
+        });
+
+        // Update ASCII output on form input
+        $("#ascii-form").on("input", function () {
+            $.ajax({
+                url: "/ascii-art",
+                type: "post",
+                data: $("#ascii-form").serialize(),
+                success: function (data) {
+                    $("#ascii-output").text(data);
+                },
+            });
+        });
+
+        // Update background color on form input
+        $("#ascii-form").on("change", "#background-color", function () {
+            var selectedColor = $(this).val();
+            $("body").css("background-color", selectedColor);
+
+            // Send background color change request to server
+            $.ajax({
+                url: "/background-color",
+                type: "post",
+                data: { color: selectedColor },
+                success: function (data) {
+                    console.log("Background color changed successfully.");
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error changing background color:", error);
+                },
+            });
+        });
+
+        // Update text color on form input
+        $("#ascii-form").on("change", "#text-color", function () {
+            var selectedColor = $(this).val();
+            $("#ascii-output").css("color", selectedColor);
+        });
+    });
+</script>
+</body>
+</html>
+
